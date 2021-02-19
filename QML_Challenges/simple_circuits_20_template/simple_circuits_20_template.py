@@ -21,16 +21,26 @@ def simple_circuits_20(angle):
     prob = 0.0
     # QHACK #
 
+    num_wires = 1
+
     # Step 1 : initalize a device
+    dev = qml.device('default.qubit', wires=num_wires)
 
     # Step 2 : Create a quantum circuit and qnode
+    @qml.qnode(dev)
+    def rotate_and_measure(param):
+        #qml.PauliZ(wires=0) # a single-wire gate
+        qml.RX(param, wires=0) # a single-wire parameterized gate
+        #qml.CNOT(wires=[0, 1]) # a two-wire gate
+        # Finally we return a measurement ofe
+        return qml.probs(0)
 
     # Step 3 : Run the qnode
-    # prob = ?
+    # print(rotate_and_measure(angle)[0])
+    prob = rotate_and_measure(angle)[0]
 
     # QHACK #
     return prob
-
 
 if __name__ == "__main__":
     # DO NOT MODIFY anything in this code block
